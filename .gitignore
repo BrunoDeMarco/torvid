@@ -1,2 +1,5 @@
 .idea/
 server/out/
+server/torrent-in
+server/torrent-out
+server/target
