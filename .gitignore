@@ -3,3 +3,5 @@ server/out/
 server/torrent-in
 server/torrent-out
 server/target
+server/venv
+server/api/__pycache__

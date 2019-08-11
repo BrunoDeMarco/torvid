@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="webOSTVjs-1.1.0/webOSTV.js" charset="utf-8"></script>
+	<script src="webOSTVjs-1.1.0/webOSTV-dev.js" charset="utf-8"></script>
+	<script type="text/javascript">
+	   //sample code for calling LS2 API
+       var lunaReq= webOS.service.request("luna://com.palm.systemservice",
+        {
+            method:"clock/getTime",
+            parameters:{},
+            onSuccess: function (args) {
+				console.log("UTC:", args.utc);
+            },
+            onFailure: function (args) {
+            }
+        });
+
+	</script>
+</head>
+	<body>
+		<video id="my-video" width="100%" height="100%" controls></video>
+	</body>
+</html>
+
+<script>
+	var video = document.querySelector('video');
+
+	var assetURL = 'http://localhost:5000/video';
+	var mimeCodec = 'video/mp4; codecs="avc1.4D401F, mp4a.40.2"';
+
+	if ('MediaSource' in window && MediaSource.isTypeSupported(mimeCodec)) {
+		var mediaSource = new MediaSource();
+		video.src = URL.createObjectURL(mediaSource);
+		mediaSource.addEventListener('sourceopen', () => {
+			var sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
+			fetch(assetURL).then(response => {
+				return response.arrayBuffer();
+			}).then(videoData => {
+				console.log('isso ai k-ralho');
+				sourceBuffer.appendBuffer(videoData);
+			})
+		});
+	} else {
+		console.error('Unsupported MIME type or codec: ', mimeCodec);
+	}
+</script>
