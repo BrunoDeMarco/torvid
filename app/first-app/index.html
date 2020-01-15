@@ -3,6 +3,7 @@
 <head>
 	<script src="webOSTVjs-1.1.0/webOSTV.js" charset="utf-8"></script>
 	<script src="webOSTVjs-1.1.0/webOSTV-dev.js" charset="utf-8"></script>
+	<script src="node_modules/shaka-player/dist/shaka-player.compiled.js"></script>
 	<script type="text/javascript">
 	   //sample code for calling LS2 API
        var lunaReq= webOS.service.request("luna://com.palm.systemservice",
@@ -19,29 +20,76 @@
 	</script>
 </head>
 	<body>
-		<video id="my-video" width="100%" height="100%" controls></video>
+		<video id="video" width="100%" height="100%" controls></video>
 	</body>
 </html>
 
 <script>
-	var video = document.querySelector('video');
+	// var manifestUri = 'https://storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd';
 
-	var assetURL = 'http://localhost:5000/video';
-	var mimeCodec = 'video/mp4; codecs="avc1.4D401F, mp4a.40.2"';
+	var manifestUri = 'http://localhost:8000/game_of_thrones/output/stream.mpd';
 
-	if ('MediaSource' in window && MediaSource.isTypeSupported(mimeCodec)) {
-		var mediaSource = new MediaSource();
-		video.src = URL.createObjectURL(mediaSource);
-		mediaSource.addEventListener('sourceopen', () => {
-			var sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
-			fetch(assetURL).then(response => {
-				return response.arrayBuffer();
-			}).then(videoData => {
-				console.log('isso ai k-ralho');
-				sourceBuffer.appendBuffer(videoData);
-			})
-		});
-	} else {
-		console.error('Unsupported MIME type or codec: ', mimeCodec);
+	function initApp() {
+		// Install built-in polyfills to patch browser incompatibilities.
+		shaka.polyfill.installAll();
+
+		// Check to see if the browser supports the basic APIs Shaka needs.
+		if (shaka.Player.isBrowserSupported()) {
+			// Everything looks good!
+			initPlayer();
+		} else {
+			// This browser does not have the minimum set of APIs we need.
+			console.error('Browser not supported!');
+		}
 	}
+
+	function initPlayer() {
+		// Create a Player instance.
+		var video = document.getElementById('video');
+		var player = new shaka.Player(video);
+
+		// Attach player to the window to make it easy to access in the JS console.
+		window.player = player;
+
+		// Listen for error events.
+		player.addEventListener('error', onErrorEvent);
+
+		// Try to load a manifest.
+		// This is an asynchronous process.
+		player.load(manifestUri).then(function() {
+			// This runs if the asynchronous load is successful.
+			console.log('The video has now been loaded!');
+		}).catch(onError);  // onError is executed if the asynchronous load fails.
+	}
+
+	function onErrorEvent(event) {
+		// Extract the shaka.util.Error object from the event.
+		onError(event.detail);
+	}
+
+	function onError(error) {
+		// Log the error.
+		console.error('Error code', error.code, 'object', error);
+	}
+
+	document.addEventListener('DOMContentLoaded', initApp);
+	
+	// var assetURL = 'http://localhost:5000/video';
+	// var mimeCodec = 'video/mp4; codecs="avc1.4D401F, mp4a.40.2"';
+
+	// if ('MediaSource' in window && MediaSource.isTypeSupported(mimeCodec)) {
+	// 	var mediaSource = new MediaSource();
+	// 	video.src = URL.createObjectURL(mediaSource);
+	// 	mediaSource.addEventListener('sourceopen', () => {
+	// 		var sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
+	// 		fetch(assetURL).then(response => {
+	// 			return response.arrayBuffer();
+	// 		}).then(videoData => {
+	// 			console.log('isso ai k-ralho');
+	// 			sourceBuffer.appendBuffer(videoData);
+	// 		})
+	// 	});
+	// } else {
+	// 	console.error('Unsupported MIME type or codec: ', mimeCodec);
+	// }
 </script>

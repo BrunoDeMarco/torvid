@@ -5,3 +5,4 @@ server/torrent-out
 server/target
 server/venv
 server/api/__pycache__
+server/assets/*
