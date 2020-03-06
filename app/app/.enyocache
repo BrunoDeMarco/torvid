@@ -1,0 +1,152 @@
+[
+  {
+    "path": "./src/options",
+    "base": "/home/bruno/Projects/torvid/app/app/lib/enyo",
+    "external": true,
+    "lib": "/home/bruno/Projects/torvid/app/app/lib/enyo",
+    "libName": "enyo",
+    "relName": "enyo/options",
+    "name": "enyo/options",
+    "isFile": true,
+    "contents": "/*jshint node:true */\n'use strict';\n\n/**\n* Returns the global enyo options hash\n* @module enyo/options\n*/\n\nmodule.exports = (global.enyo && global.enyo.options) || {};\n",
+    "mtime": 1583444772183,
+    "fullpath": "/home/bruno/Projects/torvid/app/app/lib/enyo/src/options.js",
+    "relPath": "enyo/options",
+    "requires": [],
+    "requests": [],
+    "resolved": true
+  },
+  {
+    "path": "enyo",
+    "base": "/home/bruno/Projects/torvid/app/app/lib/enyo/src",
+    "external": true,
+    "lib": "/home/bruno/Projects/torvid/app/app/lib/enyo",
+    "libName": "enyo",
+    "relName": "enyo",
+    "name": "enyo",
+    "isDirectory": true,
+    "fullpath": "/home/bruno/Projects/torvid/app/app/lib/enyo",
+    "isPackage": true,
+    "packageFile": "/home/bruno/Projects/torvid/app/app/lib/enyo/package.json",
+    "mtime": {
+      "/home/bruno/Projects/torvid/app/app/lib/enyo/package.json": 1583444772057,
+      "/home/bruno/Projects/torvid/app/app/lib/enyo/index.js": 1583444772057
+    },
+    "json": {
+      "name": "enyo",
+      "assets": [],
+      "devAssets": [],
+      "styles": [
+        "css/enyo.css",
+        "css/mixins.less"
+      ],
+      "main": "index.js",
+      "moduleDir": "src",
+      "filename": "enyo.js",
+      "version": "2.7.0",
+      "description": "Enyo is an open source object-oriented JavaScript framework emphasizing encapsulation and modularity. Enyo contains everything you need to create a fast, scalable mobile or web application.",
+      "homepage": "http://enyojs.com/",
+      "bugs": "http://jira.enyojs.com/",
+      "keywords": [
+        "framework",
+        "toolkit",
+        "components",
+        "mobile",
+        "webOS"
+      ],
+      "maintainers": [
+        {
+          "name": "Enyo JS Framework Team",
+          "web": "http://enyojs.com/"
+        }
+      ],
+      "license": "Apache-2.0",
+      "scripts": {
+        "test": "./node_modules/.bin/gulp"
+      },
+      "repository": {
+        "type": "git",
+        "url": "http://github.com/enyojs/enyo"
+      },
+      "devDependencies": {
+        "chai": "^3.5.0",
+        "enyo-dev": "^0.5.2",
+        "gulp": "^3.9.0",
+        "gulp-concat": "^2.6.0",
+        "gulp-jshint": "^2.0.0",
+        "gulp-mocha-phantomjs": "^0.10.1",
+        "jshint": "^2.9.1",
+        "jshint-stylish": "^2.1.0",
+        "mocha": "^2.4.4",
+        "sinon": "^1.17.3",
+        "sinon-chai": "^2.8.0",
+        "through2": "^2.0.0"
+      }
+    },
+    "main": "/home/bruno/Projects/torvid/app/app/lib/enyo/index.js",
+    "contents": "'use strict';\n\nexports = module.exports = require('./src/options');\nexports.version = '2.7.0';\n",
+    "nodeModules": false,
+    "relPath": "enyo",
+    "requires": [
+      "./src/options"
+    ],
+    "requests": [],
+    "resolved": true,
+    "styles": [
+      "/home/bruno/Projects/torvid/app/app/lib/enyo/css/enyo.css",
+      "/home/bruno/Projects/torvid/app/app/lib/enyo/css/mixins.less"
+    ],
+    "assets": []
+  },
+  {
+    "path": "enyo/ready",
+    "base": "/home/bruno/Projects/torvid/app/app",
+    "external": true,
+    "relName": "enyo/ready",
+    "name": "enyo/ready",
+    "isFile": true,
+    "contents": "require('enyo');\n\n// we need to register appropriately to know when\n// the document is officially ready, to ensure that\n// client code is only going to execute at the\n// appropriate time\n\nvar doc = global.document;\nvar queue = [];\nvar ready = (\"complete\" === doc.readyState);\nvar run;\nvar init;\nvar remove;\nvar add;\nvar flush;\nvar flushScheduled = false;\n\n/**\n* Registers a callback (and optional `this` context) to run after all the Enyo and library code\n* has loaded and the `DOMContentLoaded` event (or equivalent on older browsers) has been sent.\n* \n* If called after the system is in a ready state, runs the supplied code asynchronously at the\n* earliest opportunity.\n*\n* @module enyo/ready\n* @param {Function} fn - The method to execute when the DOM is ready.\n* @param {Object} [context] - The optional context (`this`) under which to execute the\n*\tcallback method.\n* @public\n*/\nmodule.exports = function (fn, context) {\n\tqueue.push([fn, context]);\n\t// schedule another queue flush if needed to run new ready calls\n\tif (ready && !flushScheduled) {\n\t\tsetTimeout(flush, 0);\n\t\tflushScheduled = true;\n\t}\n};\n\n/**\n* @private\n*/\nrun = function (fn, context) {\n\tfn.call(context || global);\n};\n\n/**\n* @private\n*/\ninit = function (event) {\n\t// if we're interactive, it should be safe to move\n\t// forward because the content has been parsed\n\tif ((ready = (\"interactive\" === doc.readyState))) {\n\t\tif (\"DOMContentLoaded\" !== event.type && \"readystatechange\" !== event.type) {\n\t\t\tremove(event.type, init);\n\t\t\tflush();\n\t\t}\n\t}\n\t// for legacy WebKit (including webOS 3.x and less) and assurance\n\tif ((ready = (\"complete\" === doc.readyState || \"loaded\" === doc.readyState))) {\n\t\tremove(event.type, init);\n\t\tflush();\n\t}\n};\n\n/**\n* @private\n*/\nadd = function (event, fn) {\n\tdoc.addEventListener(event, fn, false);\n};\n\n/**\n* @private\n*/\nremove = function (event, fn) {\n\tdoc.removeEventListener(event, fn, false);\n};\n\n/**\n* @private\n*/\nflush = function () {\n\tif (ready && queue.length) {\n\t\twhile (queue.length) {\n\t\t\trun.apply(global, queue.shift());\n\t\t}\n\t}\n\tflushScheduled = false;\n};\n\n// ok, let's hook this up\nadd(\"DOMContentLoaded\", init);\nadd(\"readystatechange\", init);\n",
+    "mtime": 1583444772186,
+    "fullpath": "/home/bruno/Projects/torvid/app/app/lib/enyo/src/ready.js",
+    "lib": "/home/bruno/Projects/torvid/app/app/lib/enyo",
+    "libName": "enyo",
+    "relPath": "enyo/ready",
+    "requires": [
+      "enyo"
+    ],
+    "requests": [],
+    "resolved": true
+  },
+  {
+    "path": "/home/bruno/Projects/torvid/app/app",
+    "entry": true,
+    "relName": "index",
+    "name": "/home/bruno/Projects/torvid/app/app",
+    "isDirectory": true,
+    "fullpath": "/home/bruno/Projects/torvid/app/app",
+    "isPackage": true,
+    "packageFile": "/home/bruno/Projects/torvid/app/app/package.json",
+    "mtime": {
+      "/home/bruno/Projects/torvid/app/app/package.json": 1583444764730,
+      "/home/bruno/Projects/torvid/app/app/index.js": 1583444764728
+    },
+    "json": {
+      "name": "app",
+      "main": "index.js",
+      "assets": [],
+      "styles": [],
+      "devAssets": [],
+      "moduleDir": "src"
+    },
+    "main": "/home/bruno/Projects/torvid/app/app/index.js",
+    "contents": "// This is the default \"main\" file, specified from the root package.json file\n// The ready function is excuted when the DOM is ready for usage.\n\nvar ready = require('enyo/ready');\n\nready(function() {\n\tconsole.log('Hello World!');\n});\n",
+    "nodeModules": false,
+    "relPath": "/home/bruno/Projects/torvid/app/app",
+    "requires": [
+      "enyo/ready"
+    ],
+    "requests": [],
+    "resolved": true,
+    "assets": []
+  }
+]
