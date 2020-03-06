@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>app</title>
+    <style>.enyo-body-fit,.enyo-document-fit{margin:0;position:relative;height:100%}body{font-family:'Helvetica Neue','Nimbus Sans L',Arial,sans-serif}body.webkitOverflowScrolling{-webkit-overflow-scrolling:touch}.enyo-body-fit{overflow:auto}.enyo-no-touch-action{-ms-touch-action:none}.enyo-untouchable{pointer-events:none}.enyo-untouchable>*{pointer-events:auto}.enyo-unselectable{cursor:default;-ms-user-select:none;-webkit-user-select:none;-moz-user-select:-moz-none;user-select:none}.enyo-selectable{cursor:auto;-ms-user-select:element;-webkit-user-select:text;-moz-user-select:text;user-select:text}.enyo-selectable ::selection,.enyo-selectable::selection{background:#3297FD;color:#FFF}body .enyo-fit{position:absolute;left:0;top:0;right:0;bottom:0}.enyo-fill,.enyo-positioned{position:relative}.enyo-clip{overflow:hidden}.enyo-border-box{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}.enyo-composite{-webkit-transform:translateZ(0);-moz-transform:translateZ(0);-ms-transform:translateZ(0);-o-transform:translateZ(0);transform:translateZ(0)}.enyo-inline{display:inline-block}.enyo-fill{width:100%;height:100%}
+</style>
+    <script>!function(e,r){function t(e,r,t){return Object.defineProperty?Object.defineProperty(e,r,t):(e[r]=t.value,e)}function n(r){if(r&&"string"==typeof r){if(a.hasOwnProperty(r))return a[r]
+var n,o,s,f,_,request=u.request,c=i[r]
+if(!c)throw new Error('Could not find module "'+r+'"')
+if(!(c instanceof Array))throw"object"==typeof c&&(c.source||c.style)?new Error('Attempt to require an asynchronous module "'+r+'"'):"string"==typeof c?new Error('Attempt to require a bundle entry "'+r+'"'):new Error('The shared module manifest has been corrupted, the module is invalid "'+r+'"')
+if(n=c[0],o=c[1],"function"!=typeof n)throw new Error('The shared module manifest has been corrupted, the module is invalid "'+r+'"')
+return s={exports:{}},request&&(o?(f=function(e){return request(o.hasOwnProperty(e)?o[e]:e)},t(f,"isRequest",{value:request.isRequest})):f=request),_=o?function(e){return require(o.hasOwnProperty(e)?o[e]:e)}:require,n(s,s.exports,e,_,f),a[r]=s.exports}}var o,u=e.enyo||(e.enyo={}),i=u.__manifest__||t(u,"__manifest__",{value:{}})&&u.__manifest__,a=u.__exported__||t(u,"__exported__",{value:{}})&&u.__exported__,require=u.require||t(u,"require",{value:n})&&u.require,s=function(){return{}}()
+o=null,s&&Object.keys(s).forEach(function(e){var r=s[e];(!i.hasOwnProperty(e)||r&&r instanceof Array)&&(i[e]=r)}),o&&o.forEach&&o.forEach(function(e){require(e)})}(this)
+
+!function(e,t){function n(e,t,n){return Object.defineProperty?Object.defineProperty(e,t,n):(e[t]=n.value,e)}function o(t){if(t&&"string"==typeof t){if(s.hasOwnProperty(t))return s[t]
+var o,r,u,c,f,request=i.request,d=a[t]
+if(!d)throw new Error('Could not find module "'+t+'"')
+if(!(d instanceof Array))throw"object"==typeof d&&(d.source||d.style)?new Error('Attempt to require an asynchronous module "'+t+'"'):"string"==typeof d?new Error('Attempt to require a bundle entry "'+t+'"'):new Error('The shared module manifest has been corrupted, the module is invalid "'+t+'"')
+if(o=d[0],r=d[1],"function"!=typeof o)throw new Error('The shared module manifest has been corrupted, the module is invalid "'+t+'"')
+return u={exports:{}},request&&(r?(c=function(e){return request(r.hasOwnProperty(e)?r[e]:e)},n(c,"isRequest",{value:request.isRequest})):c=request),f=r?function(e){return require(r.hasOwnProperty(e)?r[e]:e)}:require,o(u,u.exports,e,f,c),s[t]=u.exports}}var r,i=e.enyo||(e.enyo={}),a=i.__manifest__||n(i,"__manifest__",{value:{}})&&i.__manifest__,s=i.__exported__||n(i,"__exported__",{value:{}})&&i.__exported__,require=i.require||n(i,"require",{value:o})&&i.require,u=function(){return{"enyo/options":[function(e,t,n,require,request){"use strict"
+e.exports=n.enyo&&n.enyo.options||{}}],enyo:[function(e,t,n,require,request){"use strict"
+t=e.exports=require("./src/options"),t.version="2.7.0"},{"./src/options":"enyo/options"}],"enyo/ready":[function(e,t,n,require,request){require("enyo")
+var o,r,i,a,s,u=n.document,c=[],f="complete"===u.readyState,d=!1
+e.exports=function(e,t){c.push([e,t]),f&&!d&&(setTimeout(s,0),d=!0)},o=function(e,t){e.call(t||n)},r=function(e){(f="interactive"===u.readyState)&&"DOMContentLoaded"!==e.type&&"readystatechange"!==e.type&&(i(e.type,r),s()),(f="complete"===u.readyState||"loaded"===u.readyState)&&(i(e.type,r),s())},a=function(e,t){u.addEventListener(e,t,!1)},i=function(e,t){u.removeEventListener(e,t,!1)},s=function(){if(f&&c.length)for(;c.length;)o.apply(n,c.shift())
+d=!1},a("DOMContentLoaded",r),a("readystatechange",r)}],index:[function(e,t,n,require,request){require("enyo/ready")(function(){console.log("Hello World!")})}]}}()
+r=["index"],u&&Object.keys(u).forEach(function(e){var t=u[e];(!a.hasOwnProperty(e)||t&&t instanceof Array)&&(a[e]=t)}),r&&r.forEach&&r.forEach(function(e){require(e)})}(this)
+
+</script>
+  </head>
+  <body class="enyo-unselectable"></body>
+</html>

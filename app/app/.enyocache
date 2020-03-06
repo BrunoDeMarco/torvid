@@ -1,5 +1,37 @@
 [
   {
+    "path": "/home/bruno/Projects/torvid/app/app",
+    "entry": true,
+    "relName": "index",
+    "name": "/home/bruno/Projects/torvid/app/app",
+    "isDirectory": true,
+    "fullpath": "/home/bruno/Projects/torvid/app/app",
+    "isPackage": true,
+    "packageFile": "/home/bruno/Projects/torvid/app/app/package.json",
+    "mtime": {
+      "/home/bruno/Projects/torvid/app/app/package.json": 1583444764730,
+      "/home/bruno/Projects/torvid/app/app/index.js": 1583444764728
+    },
+    "json": {
+      "name": "app",
+      "main": "index.js",
+      "assets": [],
+      "styles": [],
+      "devAssets": [],
+      "moduleDir": "src"
+    },
+    "main": "/home/bruno/Projects/torvid/app/app/index.js",
+    "contents": "// This is the default \"main\" file, specified from the root package.json file\n// The ready function is excuted when the DOM is ready for usage.\n\nvar ready = require('enyo/ready');\n\nready(function() {\n\tconsole.log('Hello World!');\n});\n",
+    "nodeModules": false,
+    "relPath": "/home/bruno/Projects/torvid/app/app",
+    "requires": [
+      "enyo/ready"
+    ],
+    "requests": [],
+    "resolved": true,
+    "assets": []
+  },
+  {
     "path": "./src/options",
     "base": "/home/bruno/Projects/torvid/app/app/lib/enyo",
     "external": true,
@@ -116,37 +148,5 @@
     ],
     "requests": [],
     "resolved": true
-  },
-  {
-    "path": "/home/bruno/Projects/torvid/app/app",
-    "entry": true,
-    "relName": "index",
-    "name": "/home/bruno/Projects/torvid/app/app",
-    "isDirectory": true,
-    "fullpath": "/home/bruno/Projects/torvid/app/app",
-    "isPackage": true,
-    "packageFile": "/home/bruno/Projects/torvid/app/app/package.json",
-    "mtime": {
-      "/home/bruno/Projects/torvid/app/app/package.json": 1583444764730,
-      "/home/bruno/Projects/torvid/app/app/index.js": 1583444764728
-    },
-    "json": {
-      "name": "app",
-      "main": "index.js",
-      "assets": [],
-      "styles": [],
-      "devAssets": [],
-      "moduleDir": "src"
-    },
-    "main": "/home/bruno/Projects/torvid/app/app/index.js",
-    "contents": "// This is the default \"main\" file, specified from the root package.json file\n// The ready function is excuted when the DOM is ready for usage.\n\nvar ready = require('enyo/ready');\n\nready(function() {\n\tconsole.log('Hello World!');\n});\n",
-    "nodeModules": false,
-    "relPath": "/home/bruno/Projects/torvid/app/app",
-    "requires": [
-      "enyo/ready"
-    ],
-    "requests": [],
-    "resolved": true,
-    "assets": []
   }
 ]
